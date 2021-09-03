@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+runtime-cli config:generate /opt/runtime/templates /opt/runtime/config --configFile=/opt/runtime/config/defaults.yml --mergeFile=/opt/runtime/config/runtime.yml,/opt/runtime/config/custom.yml
+
+chmod +x /opt/runtime/config/init.sh
+/opt/runtime/config/init.sh
+
+exec "$@"

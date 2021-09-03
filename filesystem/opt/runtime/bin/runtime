@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+function reload {
+    /opt/runtime/bin/entrypoint
+    supervisorctl -c /opt/runtime/config/supervisord.conf restart all
+}
+
+function resetPermissions {
+    chmod +x /opt/runtime/bin/entrypoint
+    chown -R ${RUNTIME_USER_ID}.${RUNTIME_USER_ID} \
+        /run \
+        /dev/stdout \
+        /dev/stderr \
+        /opt/runtime \
+        /home/runtime \
+        /var/lib/nginx \
+        /var/log/nginx
+}
+
+case "$1" in
+    reload)
+        reload
+        ;;
+    reset-permissions)
+        resetPermissions
+        ;;
+    *)
+        runtime-cli log "Unknown command $1" --type error
+        exit 1
+esac
+
+runtime-cli log "DONE!"

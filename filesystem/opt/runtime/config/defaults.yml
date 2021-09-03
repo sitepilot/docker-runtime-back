@@ -1,0 +1,30 @@
+---
+docRoot: "/"
+
+locations:
+  []
+  # - path: /svc/node-red/
+  #   proxy: http://node-red:1880/
+  #   config: |
+  #     auth_request /check-auth;
+
+supervisor:
+  []
+  # - name: horizon
+  #   command: /home/runtime/public/artisan horizon
+  #   directory: /home/runtime/public
+
+ssl:
+  key: ""
+  cert: ""
+
+php:
+  timezone: "Europe/Amsterdam"
+  uploadSize: "128M"
+  memoryLimit: "256M"
+  maxExecutionTime: "300"
+  maxInputVars: "10000"
+
+paths:
+  home: /home/runtime
+  config: /opt/runtime/config
